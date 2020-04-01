@@ -1,0 +1,64 @@
+import java.util.*;
+public class MaxMinFind
+{
+    public static void display(int[] arr,int vidx){
+        if(vidx==arr.length) return;
+
+        System.out.print(arr[vidx] + " ");
+        display(arr,vidx+1);
+    }
+
+    public static boolean find_01(int[] arr,int vidx,int data){
+        if(vidx==arr.length) 
+            return false;
+        
+        if(arr[vidx]==data) 
+            return true;  // work in pre area.
+        return find_01(arr,vidx+1,data);
+    }
+
+    
+    public static boolean find_02(int[] arr,int vidx,int data){
+        if(vidx==arr.length) return false;
+        
+        
+        boolean ans=find_02(arr,vidx+1,data);
+        if(ans) 
+            return true;   //work in post area.
+        else
+           return arr[vidx]==data;
+    }
+    
+    
+    public static int maximum(int[] arr,int idx){
+        if(vidx==arr.length-1) return arr[vidx];
+       
+        int maxele=maximum(arr,vidx+1);
+        return Math.max(maxele,arr[vidx]); // max(a,b); for c++
+    }
+
+    static int max_=-1;
+    public static void maximum_02(int[] arr,int idx){
+        if(vidx==arr.length-1) return ;
+        
+        max_=Math.max(arr[vidx],max_);
+        maximum_02(arr,vidx);
+    }
+
+    public static int minimum(int[] arr,int idx){
+        if(vidx==arr.length-1) return arr[vidx];
+       
+        int maxele=minimum(arr,vidx+1);
+        return Math.min(maxele,arr[vidx]);  // min(a,b); for c++
+    }
+    public static void main(String args[])
+    {
+        // int[] arr=new int[10];  
+        // for(int i=0;i<arr.length;i++){
+        //   arr[i]=scn.nextInt();
+        // }
+
+        int[] arr={1,234,34,7,2,1,23,4,5,6,3,2,5,7,32};
+        display(arr,0);
+    }
+}
