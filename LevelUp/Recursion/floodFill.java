@@ -1,6 +1,4 @@
 import java.util.*;
-
-import javax.lang.model.util.ElementScanner14;
 public class floodFill 
 {
     static int counter=0;
@@ -9,7 +7,7 @@ public class floodFill
         if(sr==mat.length-1 && sc==mat[0].length-1)
         {
             counter++;
-            System.out.print(counter+". "+psf);
+            System.out.println(counter+". "+psf+" ");
             return;
         }
         if(isAtWrong(sr, sc, mat)==true || visited[sr][sc]==true)
@@ -18,9 +16,10 @@ public class floodFill
         }
         visited[sr][sc]=true;
         floodfill(sr+1, sc, mat,visited, psf+"D");
-        floodfill(sr, sc+1, mat,visited, psf+"R");
-        floodfill(sr-1, sc, mat,visited, psf+"U");
         floodfill(sr, sc-1, mat,visited, psf+"L");
+        floodfill(sr-1, sc, mat,visited, psf+"T");
+        floodfill(sr, sc+1, mat,visited, psf+"R");
+        visited[sr][sc]=false;
     }
     public static boolean isAtWrong(int sr,int sc,int mat[][])
     {

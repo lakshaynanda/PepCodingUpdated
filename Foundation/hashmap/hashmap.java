@@ -1,94 +1,135 @@
-import java.util.*;
-public class hashmap 
-{
-    public static void basicFunction()
-    {
-        HashMap<String,Integer> Coronareport=new HashMap<>();
-        Coronareport.put("USA",291545);
-        Coronareport.put("SPAIN",124736);
-        Coronareport.put("ITALY",119872);
-        Coronareport.put("INDIA",3082);
-        System.out.println(Coronareport);
-        if(Coronareport.containsKey("USA"))
-        {
-            System.out.println(Coronareport.get("USA"));
-        }
-        System.out.println(Coronareport.getOrDefault("USA", 100));
-        System.out.println(Coronareport.keySet());
-        
+import java.util.LinkedList;
+import java.util.ArrayList;
+public class hashmap{
+  
+    public class Node{
+       Integer key=null;
+       Integer value=null;
+       
+       Node(Integer key,Integer value){
+           this.key=key;
+           this.value=value;
+       }
     }
-    public static void freeMap(String str)
-    {
-        HashMap<Character,Integer> map=new HashMap<>();
-        for(int i=0;i<str.length();i++)
-        {
-            char ch=str.charAt(i);
-            // if(!map.containsKey(ch))
-            // {
-            //     map.put(ch,1);
-            // }
-            // else{
-            //     map.put(ch,map.get(ch)+1);
-            // }
-            map.put(ch,map.getOrDefault(ch, 0)+1);
-        }
-        System.out.println(map);
-        for(char ch:map.keySet())
-        {
-            System.out.println(ch+" -> "+map.get(ch));
+
+    LinkedList<Node>[] groupArray=new LinkedList[10];
+    int nodeCount=0;
+
+    public hashmap(){
+        reAssign(10);
+    }
+
+    public void reAssign(int size){
+        groupArray=new LinkedList[size];
+        nodeCount=0;
+
+        for(int i=0;i<size;i++){
+           groupArray[i]=new LinkedList<>();
         }
     }
-    public static void freqMapofIDX(String str)
-    {
-        HashMap<Character,ArrayList<Integer>> map=new HashMap<>();
-        for(int i=0;i<str.length();i++)
-        {
-            char ch=str.charAt(i);
-            map.putIfAbsent(ch, ArrayList<>());
-            map.get(ch).add(i);
-        }
-        for(char ch: map.keySet())
-        {
-            System.out.println(ch+" -> "+ map.get(ch));
+
+    public int size(){
+      return nodeCount;
+    }
+
+  public boolean isEmpty(){
+      return nodeCount==0;
+  }
+
+  public void display(){
+    String ans="[";
+    for(int i=0;i<groupArray.length;i++){
+        LinkedList<Node> group=groupArray[i];
+
+        int size=group.size();
+        while(size--> 0){
+           Node node=group.getFirst();
+           ans+=node.key + "="+ node.value+", ";
+           group.addLast(group.removeFirst());
         }
     }
-    public static void intersectionSimple(int[] one,int[] two)
-    {
-        HashMap<Integer,Integer> mp=new HashMap<>();
-        for(int ele:one)
-        {
-            map.put(ele,map.getOrDefault(ele,0)+1);
-        }
-        for(int ele:two)
-        {
-            if(map.containsKey(ele))
-            {
-                System.out.print(ele+" ");
-                map.remove(ele);
-            }
+    ans+="]";
+    System.out.println(ans);
+  }
+
+   public void put(Integer key,Integer value){
+         Node node=foundNodeInGroup(key);
+         if(node!=null){
+             node.value=value;  //update
+         }else{
+            int myGroupIdx=getHashCode(key);
+            LinkedList<Node> group=groupArray[myGroupIdx];
+            
+            Node  nnode=new Node(key,value);
+            group.addLast(nnode);
+            nodeCount++;
+         }
+   }
+
+    public Integer get(Integer key){
+      Node node=foundNodeInGroup(key);
+      return node!=null?node.value:null;
+    }
+
+    public Integer remove(int key){
+        Node node=foundNodeInGroup(key);
+        if(node!=null){
+            int myGroupIdx=getHashCode(key);
+            LinkedList<Node> group=groupArray[myGroupIdx];
+
+            group.removeFirst(); 
+            nodeCount--;
         }
 
+        return node!=null?node.value:null;
     }
-    public static void intersection2(int[] one,int[] two)
-    {
-        HashMap<Integer,Integer> map=new HashMap<>();
-        for(int ele:one)
-        {
-            map.put(ele,map.getOrDefault(ele, 0)+1);
-        }
-        for(int ele:two)
-        {
-            if(map.containsKey(ele))
-            {
-                System.out.print(ele+" ");
-                map.remove(ele);
+
+    public boolean containsKey(Integer key){
+        Node node=foundNodeInGroup(key);
+        return node!=null?true:false;
+    }
+
+
+    public ArrayList<Integer> keySet(){
+         ArrayList<Integer> ans=new ArrayList<>();
+         for(int i=0;i<groupArray.length;i++){
+             LinkedList<Node> group=groupArray[i];
+
+             int size=group.size();
+             while(size--> 0){
+                Node node=group.getFirst();
+                ans.add(node.key);
+                group.addLast(group.removeFirst());
+             }
+         }
+
+         return ans;
+    }
+
+    public Node foundNodeInGroup(Integer key){
+        int myGroupIdx=getHashCode(key);
+        LinkedList<Node> group=groupArray[myGroupIdx];
+
+        if(group==null) return null;
+        
+        Node rn=null;
+        int size=group.size();
+        while(size--> 0){   //O(lambda) === O(1)
+            Node node=group.getFirst();
+            if(node.key==key) {
+                rn=node;
+                break;
             }
+
+            group.addLast(group.removeFirst());
         }
+        return rn;
     }
-    public static void main(String args[])
-    {
-        // basicFunction();
-        String str="ajvgdsvcuvkavcqyukvyccbiwd";
-        freeMap(str);
-    }
+
+
+    public int getHashCode(Integer key){
+        int hc=key.hashCode();
+        return Math.abs(hc)%groupArray.length;
+    } 
+
 }
