@@ -1,7 +1,7 @@
 import java.util.*;
-
-public class nqueens {
+public class nqueenpro {
     static int count=0;
+
     private static boolean theBoardisValid(boolean[][] chess)
     {
         for(int row=0;row<chess.length;row++)
@@ -49,29 +49,6 @@ public class nqueens {
         }
         return true;
     }
-    public static void nqueens(boolean[][] chess,int qpsf,String asf,int lqpb)
-    {
-        if(qpsf==chess.length)
-        {
-            count++;
-            if(theBoardisValid(chess)==true)
-            {
-                System.out.println(count+". "+asf);
-            }
-            return;
-        }
-        for(int b=lqpb+1;b<chess.length*chess.length;b++)
-        {
-            int row=b/chess.length;
-            int col=b%chess.length;
-            if(chess[row][col]==false)
-            {
-                chess[row][col]=true;
-                nqueens(chess, qpsf+1, asf+"q"+(qpsf+1)+"b"+b+" ", b);
-                chess[row][col]=false;
-            }
-        }
-    }
     public static void nqueenProactive(boolean[][] chess,int qpsf,String asf,int lqpb)
     {
         if(qpsf==chess.length)
@@ -97,11 +74,8 @@ public class nqueens {
     }
     public static void main(String args[])
     {
-        boolean[][] chess =new boolean[6][6];
-        long start=System.currentTimeMillis();
-        // nqueenProactive(chess, 0, "", -1);
-        nqueens(chess, 0, "", -1);
-        long end=System.currentTimeMillis();
-        System.out.println(end-start);
+        boolean[][] chess =new boolean[4][4];
+        nqueenProactive(chess, 0, "", -1);
     }
+
 }
