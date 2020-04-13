@@ -30,11 +30,22 @@ public class fibo {
 
         return fm;
     }
+    public static int FiboTab(int n)
+    {
+        int dp[]=new int[n+1];
+        dp[0]=0;
+        dp[1]=1;
+        for(int x=2;x<=n;x++)
+        {
+            dp[x]=dp[x-1]+dp[x-2];
+        }
+        return dp[n];
+    }
     public static void main(String args[])
     {
         int n=10;
-        int dp[]=new int[n+1];
-        System.out.println(FiboMem(n,dp));
+        // int dp[]=new int[n+1];
+        System.out.println(FiboTab(n));
     }
 
 }
