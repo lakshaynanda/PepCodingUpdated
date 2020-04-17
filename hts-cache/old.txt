@@ -1,0 +1,4 @@
+date	size'/'remotesize	flags(request:Update,Range state:File response:Modified,Chunked,gZipped)	statuscode	status ('servermsg')	MIME	Etag|Date	URL	localfile	(from URL)
+17:35:31	67/67	U--M--	200	updated ('OK')	text/plain	date:Thu,%2016%20Apr%202020%2012:05:30%20GMT	https://norebro.clbthemes.com/robots.txt		(from )
+17:35:31	126972/126972	---M-Z	200	added ('OK')	text/html	date:Thu,%2016%20Apr%202020%2012:05:30%20GMT	https://norebro.clbthemes.com/demo7/	norebro.clbthemes.com/demo7/index.html	(from )
+17:35:32	42/42	---M--	405	error ('Method%20Not%20Allowed')	text/plain	date:Thu,%2016%20Apr%202020%2012:05:31%20GMT	https://norebro.clbthemes.com/demo7/xmlrpc.php	norebro.clbthemes.com/demo7/xmlrpc.php	(from https://norebro.clbthemes.com/demo7/)
